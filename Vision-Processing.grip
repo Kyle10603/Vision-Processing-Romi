@@ -21,7 +21,7 @@
       </grip:Input>
       <grip:Input step="0" socket="3">
         <value>
-          <double>58.474558995941926</double>
+          <double>33.91238736722039</double>
           <double>255.0</double>
         </value>
       </grip:Input>
@@ -105,15 +105,15 @@
       <grip:Input step="1" socket="0"/>
     </grip:Connection>
     <grip:Connection>
-      <grip:Output step="2" socket="0" previewed="true"/>
-      <grip:Input step="3" socket="0"/>
-    </grip:Connection>
-    <grip:Connection>
       <grip:Output step="1" socket="0" previewed="false"/>
       <grip:Input step="2" socket="0"/>
     </grip:Connection>
     <grip:Connection>
-      <grip:Output source="0" socket="0" previewed="false"/>
+      <grip:Output step="2" socket="0" previewed="true"/>
+      <grip:Input step="3" socket="0"/>
+    </grip:Connection>
+    <grip:Connection>
+      <grip:Output source="0" socket="0" previewed="true"/>
       <grip:Input step="0" socket="0"/>
     </grip:Connection>
   </connections>
@@ -130,7 +130,7 @@
     <language>Java</language>
     <className>GripPipeline</className>
     <implementWpilibPipeline>false</implementWpilibPipeline>
-    <saveDir>C:\Users\Kyle Schmottlach\GRIP</saveDir>
+    <saveDir>C:\Users\kyle1\GRIP</saveDir>
     <packageName></packageName>
     <moduleName>grip</moduleName>
   </codeGenerationSettings>
