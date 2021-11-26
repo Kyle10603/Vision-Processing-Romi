@@ -6,10 +6,12 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.commands.AlignWithVision;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.AutonomousDistance;
 import frc.robot.commands.AutonomousTime;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Vision;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -22,7 +24,8 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final Drivetrain m_drivetrain = new Drivetrain();
+  private final Drivetrain drivetrain;
+  private final Vision vision;
 
   // Assumes a gamepad plugged into channnel 0
   private final XboxController driveStick;
@@ -43,6 +46,9 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    drivetrain = new Drivetrain();
+    vision = new Vision();
+
     driveStick = new XboxController(0);
 
     // Configure the button bindings
@@ -58,12 +64,16 @@ public class RobotContainer {
   private void configureButtonBindings() {
     // Default command is arcade drive. This will run unless another command
     // is scheduled over it.
-    m_drivetrain.setDefaultCommand(getArcadeDriveCommand());
+    drivetrain.setDefaultCommand(getArcadeDriveCommand());
 
     // Setup SmartDashboard options
-    m_chooser.setDefaultOption("Auto Routine Distance", new AutonomousDistance(m_drivetrain));
-    m_chooser.addOption("Auto Routine Time", new AutonomousTime(m_drivetrain));
+    m_chooser.setDefaultOption("Auto Routine Distance", new AutonomousDistance(drivetrain));
+    m_chooser.addOption("Auto Routine Time", new AutonomousTime(drivetrain));
     SmartDashboard.putData(m_chooser);
+  }
+
+  public void updateShuffleboard() {
+    vision.updateShuffleboard();
   }
 
   /**
@@ -72,7 +82,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return m_chooser.getSelected();
+    return new AlignWithVision(drivetrain, vision);
   }
 
   /**
@@ -82,8 +92,8 @@ public class RobotContainer {
    */
   public Command getArcadeDriveCommand() {
     return new ArcadeDrive(
-        m_drivetrain, 
-        () -> driveStick.getRawAxis(XboxController.Axis.kLeftY.value), 
+        drivetrain, 
+        () -> -driveStick.getRawAxis(XboxController.Axis.kLeftY.value), 
         () -> driveStick.getRawAxis(XboxController.Axis.kRightX.value));
   }
 }
