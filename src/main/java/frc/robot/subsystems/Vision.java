@@ -101,7 +101,7 @@ public class Vision extends PIDSubsystem {
     }
 
     public void setExistanceToFalse() {
-      updateValues(0, 0, 0);
+      updateValues(320, 0, 0);
       exists = false;
     }
   }
